@@ -1,0 +1,20 @@
+extends ../../layouts/default.pug 
+//- kế thừa
+include ../../mixins/box-head.pug
+//- nhúng vào
+block main
+  h1 /admin/product đi
+  .container.my-3 
+    .row 
+      .col-12 
+      
+    .row 
+      each item in product 
+        .col-4.mb-3 
+          .product-item 
+            .inner-image
+              img(
+                src-item.thumnail 
+              )
+            .inner-content 
+              h3.inner-title #{item.title}
