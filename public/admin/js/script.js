@@ -102,7 +102,6 @@ if(checkboxMulti){
 // Form Change Multi
 const formChangeMulti = document.querySelector("[form-change-multi]")
 if(formChangeMulti){
-  console.log(formChangeMulti)
   formChangeMulti.addEventListener("submit", (e) => {
     e.preventDefault()
 
