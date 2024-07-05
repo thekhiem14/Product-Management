@@ -3,7 +3,7 @@ const buttonStatus = document.querySelectorAll("[button-status]");
 
 if (buttonStatus.length > 0) {
   let url = new URL(window.location.href);
-// Bộ lọc
+  // Bộ lọc
   buttonStatus.forEach(button => {
     button.addEventListener("click", () => {
       const status = button.getAttribute("button-status");
@@ -22,39 +22,39 @@ if (buttonStatus.length > 0) {
 
 // Form Search
 const formSearch = document.querySelector("#form-search")
-if(formSearch){
-  let url =new URL(window.location.href)
+if (formSearch) {
+  let url = new URL(window.location.href)
 
   formSearch.addEventListener("submit", (e) => {
     e.preventDefault()
     const keyword = e.target.elements.keyword.value
 
-    if(keyword){
+    if (keyword) {
       url.searchParams.set("keyword", keyword)
     } else {
       url.searchParams.delete("keyword")
     }
 
-    window.location.href=url.href
+    window.location.href = url.href
   })
 }
 // End Form Search
 
 // Pagination
 const buttonPagination = document.querySelectorAll("[button-pagination]")
-if(buttonPagination){
-  let url =new URL(window.location.href)
+if (buttonPagination) {
+  let url = new URL(window.location.href)
 
   buttonPagination.forEach(button => {
     button.addEventListener("click", () => {
       const page = button.getAttribute("button-pagination")
-  
-      if(page){
+
+      if (page) {
         url.searchParams.set("page", page)
-      } else{
+      } else {
         url.searchParams.delete("page")
       }
-  
+
       window.location.href = url.href
     })
   })
@@ -63,18 +63,18 @@ if(buttonPagination){
 
 // Checkbox Multi
 const checkboxMulti = document.querySelector("[checkbox-multi]")
-if(checkboxMulti){
+if (checkboxMulti) {
   const inputCheckall = checkboxMulti.querySelector("input[name='checkall']")
   const inputId = checkboxMulti.querySelectorAll("input[name='id']")
 
   inputCheckall.addEventListener("click", () => {
-    if(inputCheckall.checked){
-      inputId.forEach(input =>{
+    if (inputCheckall.checked) {
+      inputId.forEach(input => {
         input.checked = true
       })
     }
-    else{
-      inputId.forEach(input =>{
+    else {
+      inputId.forEach(input => {
         input.checked = false
       })
     }
@@ -86,7 +86,7 @@ if(checkboxMulti){
           "input[name='id']:checked"
         ).length
 
-        if(countChecked == inputId.length) {
+        if (countChecked == inputId.length) {
           inputCheckall.checked = true
         }
         else {
@@ -99,42 +99,58 @@ if(checkboxMulti){
 }
 // End Checkbox Multi
 
-// Form Change/Delete Multi
-const formChangeMulti = document.querySelector("[form-change-multi]")
-if(formChangeMulti){
-  formChangeMulti.addEventListener("submit", (e) => {
-    e.preventDefault()
+// Form Change Multi
 
-    const checkBoxMulti = document.querySelector("[checkbox-multi]")
-    const inputChecked = checkBoxMulti.querySelectorAll(
-      "input[name='id']:checked"
-    )
+const formChangeMulti = document.querySelector("[form-change-multi");
+if (formChangeMulti) {
+    formChangeMulti, addEventListener("submit", (e) => {
+        e.preventDefault();
 
-    if(inputChecked.length > 0){
+        const checkboxMulti = document.querySelector("[checkbox-multi]");
+        const inputChecked = checkboxMulti.querySelectorAll(
+            "input[name='id']:checked"
+        );
 
-      const typeSelected=formChangeMulti.querySelector("option[value='delete-all']:checked")
-      if(typeSelected){
-        const deleteMultiConfirm = confirm("Bạn có chắc chắn muốn xóa sản phẩm ?")
-        if(!deleteMultiConfirm){
-          return
+        const typeChange = e.target.elements.type.value;
+
+        if (typeChange == "delete-all") {
+            const isConfirm = connpfirm("Bạn có chắc muốn xóa sản phẩm này?");
+
+            if (!isConfirm) {
+                return;
+            }
         }
-      }
 
-      let ids = []
-      const inputIds = formChangeMulti.querySelector("input[name='ids']")
 
-      inputChecked.forEach(input => {
-        const id = input.value
-        ids.push(id)
-      })
+        if (inputChecked.length > 0) {
+            let ids = [];
+            const inputIds = formChangeMulti.querySelector("input[name='ids']");
 
-      inputIds.value = ids.join(", ")
+            inputChecked.forEach(input => {
+                const id = input.value;
 
-      formChangeMulti.submit()
-    }
-    else{
-      alert("Vui long chon it nhat mot ban ghi")
-    }
-  })
+                if (typeChange == "change-position") {
+                    const position = input
+                        .closest("tr")
+                        .querySelector("input[name = 'position']").value;
+                    
+                   ids.push(`${id}-${position}`);
+
+                }
+                else { 
+                    ids.push(id);
+                }
+
+            })
+
+            inputIds.value = ids.join(", ")
+
+            formChangeMulti.submit()
+        }
+        else {
+            alert("Vui lòng chọn ít nhất một bản ghi")
+        }
+    })
 }
-// End Form Change/Delete Mutil
+
+//End Form Change Multi
