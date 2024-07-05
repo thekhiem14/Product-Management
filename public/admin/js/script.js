@@ -99,18 +99,27 @@ if(checkboxMulti){
 }
 // End Checkbox Multi
 
-// Form Change Multi
+// Form Change/Delete Multi
 const formChangeMulti = document.querySelector("[form-change-multi]")
 if(formChangeMulti){
   formChangeMulti.addEventListener("submit", (e) => {
     e.preventDefault()
 
-    const checkboxMulti = document.querySelector("[checkbox-multi]")
-    const inputChecked = checkboxMulti.querySelectorAll(
+    const checkBoxMulti = document.querySelector("[checkbox-multi]")
+    const inputChecked = checkBoxMulti.querySelectorAll(
       "input[name='id']:checked"
     )
 
     if(inputChecked.length > 0){
+
+      const typeSelected=formChangeMulti.querySelector("option[value='delete-all']:checked")
+      if(typeSelected){
+        const deleteMultiConfirm = confirm("Bạn có chắc chắn muốn xóa sản phẩm ?")
+        if(!deleteMultiConfirm){
+          return
+        }
+      }
+
       let ids = []
       const inputIds = formChangeMulti.querySelector("input[name='ids']")
 
@@ -128,4 +137,4 @@ if(formChangeMulti){
     }
   })
 }
-// End Form Change Mutil
+// End Form Change/Delete Mutil

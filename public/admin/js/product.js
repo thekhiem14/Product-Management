@@ -9,7 +9,6 @@ if(buttonChangeStatus.length > 0){
     buttonChangeStatus.forEach(button => {
         button.addEventListener("click", () => {
             const statusCurrent = button.getAttribute("data-status")
-            console.log(statusCurrent)
             const id = button.getAttribute("data-id")
             let statusChange = statusCurrent == "active" ? "inactive" : "active"
 
