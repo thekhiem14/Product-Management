@@ -1,4 +1,4 @@
-extends ../../layouts/defalut.pug
+extends ../../layouts/default.pug
 //- ke thua file default
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
@@ -13,16 +13,23 @@ block main
 
   .card.mb-3
     .card-header Bộ lọc và Tìm kiếm
-      .card-body
+    .card-body
       .row
         .col-6
           +filter-status(filterStatus)
         .col-6
           +search(keyword)
   .card.mb-3
-      .card-header Danh sách
+    .card-header Danh sách
       .card-body
-        +form-change-multi(`${prefixAdmin}/product/change-multi?_method=PATCH`)
+        .row 
+          .col-8
+            +form-change-multi(`${prefixAdmin}/product/change-multi?_method=PATCH`)
+          .col-4 
+            a(
+              href=`${prefixAdmin}/product/create`
+              class="btn btn-outline-success"
+            ) + Thêm mới
 
         table(
           class= "table.table-hover.table-sm"

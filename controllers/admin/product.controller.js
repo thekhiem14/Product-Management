@@ -1,9 +1,10 @@
 const Product = require("../../models/product.model")
 
+const systemConfig = require("../../config/system")
+
 const filterStatusHelper = require("../../helper/filterStatus")
 const searchHelper = require("../../helper/search")
 const pagiantionHelper = require("../../helper/pagination")
-const { query } = require("express")
 
 // [GET] /admin/product
 module.exports.product = async (req, res) => {
@@ -87,6 +88,8 @@ module.exports.changeMulti = async (req, res) => {
 
                     await Product.updateOne({ _id: id }, { position: position })
                }
+               
+               req.flash("success", `Doi vi tri thanh cong ${ids.length} san pham`)
                break;
           default:
                break;
@@ -107,7 +110,33 @@ module.exports.deleteItem = async (req, res) => {
           deletedAt: new Date()
           // Cập nhật ngày xóa
      })
+     req.flash("success", `Xoa thanh cong san pham`)
      // Xóa mềm  
 
      res.redirect("back")
+}
+
+// [GET] /admin/product/creat
+module.exports.creat = async (req, res) => {
+     res.render("admin/pages/product/create", {
+          pageTitle:"Them moi san pham"
+     })
+}
+// [POST] /admin/product/creat
+module.exports.creatPost = async (req, res) => {
+     req.body.price = parseInt(req.body.price)
+     req.body.discountPercentage = parseInt(req.body.discountPercentage)
+     req.body.stock = parseInt(req.body.stock)
+     
+     if(req.body.position == "") {
+          const countProducts = await Product.countDocuments();
+          req.body.position = countProducts + 1;
+     } else {
+          req.body.position = parseInt(req.body.position);
+     } 
+
+     const product = new Product(req.body);
+     await product.save();
+
+     res.redirect(`${systemConfig.prefixAdmin}/product`);
 }
