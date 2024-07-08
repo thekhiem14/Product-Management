@@ -124,6 +124,7 @@ module.exports.creat = async (req, res) => {
 }
 // [POST] /admin/product/creat
 module.exports.creatPost = async (req, res) => {
+     console.log(req.file)
      req.body.price = parseInt(req.body.price)
      req.body.discountPercentage = parseInt(req.body.discountPercentage)
      req.body.stock = parseInt(req.body.stock)
@@ -134,6 +135,8 @@ module.exports.creatPost = async (req, res) => {
      } else {
           req.body.position = parseInt(req.body.position);
      } 
+
+     req.body.thumbnail = `/uploads/${req.file.filename}`
 
      const product = new Product(req.body);
      await product.save();
