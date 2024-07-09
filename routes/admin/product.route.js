@@ -17,6 +17,11 @@ router.delete("/delete/:id", controller.deleteItem)
 
 router.get("/create", controller.creat)
 
-router.post("/create",upload.single('thumbnail'), validate.creatPost, controller.creatPost)
+router.post("/create", upload.single('thumbnail'), validate.creatPost, controller.creatPost)
+
+router.get("/edit/:id", controller.edit)
+
+router.patch("/edit/:id", upload.single('thumbnail'), validate.creatPost, controller.editPatch)
+
 
 module.exports = router;

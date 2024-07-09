@@ -20,7 +20,6 @@ module.exports.product = async (req, res) => {
      }
 
      const objectSearch = searchHelper(req.query)
-     // console.log(objectSearch)
 
      if (objectSearch.regex) {
           find.title = objectSearch.regex
@@ -40,10 +39,10 @@ module.exports.product = async (req, res) => {
      // End Pagination
 
      const product = await Product.find(find)
-          .sort({position: "asc"})
+          .sort({ position: "asc" })
           .limit(objectPagination.limitItems)
           .skip(objectPagination.skip)
-     
+
      res.render("admin/pages/product/index", {
           product: product,
           filterStatus: filterStatus,
@@ -88,7 +87,7 @@ module.exports.changeMulti = async (req, res) => {
 
                     await Product.updateOne({ _id: id }, { position: position })
                }
-               
+
                req.flash("success", `Doi vi tri thanh cong ${ids.length} san pham`)
                break;
           default:
@@ -119,24 +118,23 @@ module.exports.deleteItem = async (req, res) => {
 // [GET] /admin/product/creat
 module.exports.creat = async (req, res) => {
      res.render("admin/pages/product/create", {
-          pageTitle:"Them moi san pham"
+          pageTitle: "Them moi san pham"
      })
 }
 // [POST] /admin/product/creat
 module.exports.creatPost = async (req, res) => {
-
      req.body.price = parseInt(req.body.price)
      req.body.discountPercentage = parseInt(req.body.discountPercentage)
      req.body.stock = parseInt(req.body.stock)
-     
-     if(req.body.position == "") {
+
+     if (req.body.position == "") {
           const countProducts = await Product.countDocuments();
           req.body.position = countProducts + 1;
      } else {
           req.body.position = parseInt(req.body.position);
-     } 
+     }
 
-     if(req.file) {
+     if (req.file) {
           req.body.thumbnail = `/uploads/${req.file.filename}`
      }
 
@@ -144,4 +142,38 @@ module.exports.creatPost = async (req, res) => {
      await product.save();
 
      res.redirect(`${systemConfig.prefixAdmin}/product`);
+}
+// [GET] /admin/product/edit/:id
+module.exports.edit = async (req, res) => {
+     try {
+          const id = req.params.id
+          const product = await Product.findById(id)
+          res.render("admin/pages/product/edit", {
+               product: product
+          })
+     } catch (error) {
+          res.redirect(`${systemConfig.prefixAdmin}/product`)
+     }
+}
+// [PATCH] /admin/product/edit/:id
+module.exports.editPatch = async (req, res) => {
+     const id = req.body.id
+
+     req.body.price = parseInt(req.body.price)
+     req.body.discountPercentage = parseInt(req.body.discountPercentage)
+     req.body.stock = parseInt(req.body.stock)
+     req.body.position = parseInt(req.body.position)
+
+     if (req.file) {
+          req.body.thumbnail = `/uploads/${req.file.filename}`
+     }
+
+     try {
+          await Product.updateOne({ _id: id }, req.body)
+          req.flash("success", `Cập nhật thành công`)
+     } catch (error) {
+          req.flash("error", `Cập nhật thất bại!`)
+     }
+
+     res.redirect("back")
 }
