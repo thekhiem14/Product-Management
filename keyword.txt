@@ -3,5 +3,6 @@ require: gọi file
 include: gọi file của pug
 render: hiển thị ra màn hình thông qua templte(pug...)
 module.exports: return của file
-index/pug -> route -> controller -> pug -> js(nếu k dùng thẻ form) -> route -> controller -> model 
+(index)pug -> route -> controller -> (page)pug -> js(nếu k dùng thẻ form) -> route -> controller -> model 
 (Đã cập nhật dữ liệu lên database thì giao diện tự động cập nhật )
+*Route có thể có cùng đường dẫn nhưng khác method, cái đầu để tạo trang cái 2 để chỉnh sửa

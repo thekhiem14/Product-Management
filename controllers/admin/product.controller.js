@@ -177,3 +177,16 @@ module.exports.editPatch = async (req, res) => {
 
      res.redirect("back")
 }
+// [GET] /admin/product/detail/:id
+module.exports.detail = async (req, res) => {
+     try {
+          const id = req.params.id
+          const product = await Product.findById(id)
+          res.render("admin/pages/product/detail", {
+               pageTitle: product.title,
+               product: product
+          })
+     } catch (error) {
+          res.redirect(`${systemConfig.prefixAdmin}/product`)
+     }
+}
