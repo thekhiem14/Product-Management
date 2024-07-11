@@ -3,12 +3,11 @@ extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 //- nhúng vào
 block main
-  h1 /admin/product đi
 
   .container.my-3 
     .row 
       .col-12 
-        +box-head("Danh sach san pham")
+        +box-head("Danh sách sản phẩm")
     .row 
       each item in product 
         .col-4.mb-3 
@@ -19,7 +18,8 @@ block main
                 alt=item.title
               )
             .inner-content 
-              h3.inner-title #{item.title}
+              h3.inner-title 
+              a(href=`/product/${item.slug}`) #{item.title}
               .inner-price-new #{item.priceNew}$
               .inner-pice-old #{item.priceOld}$
               .inner-discount -#{item.discountPercentage}$
