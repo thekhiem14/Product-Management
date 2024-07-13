@@ -29,7 +29,7 @@ router.post(
 
 router.get("/edit/:id", controller.edit)
 
-router.patch("/edit/:id", upload.single('thumbnail'), validate.creatPost, controller.editPatch)
+router.patch("/edit/:id", upload.single('thumbnail'), validate.creatPost, uploadCloud.upload, controller.editPatch)
 
 router.get("/detail/:id", controller.detail)
 

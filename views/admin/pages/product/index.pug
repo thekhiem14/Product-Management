@@ -5,6 +5,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
+include ../../mixins/sort.pug
 //- gọi file
 block main
   h1 Trang san pham
@@ -19,6 +20,7 @@ block main
           +filter-status(filterStatus)
         .col-6
           +search(keyword)
+  +sort()
   .card.mb-3
     .card-header Danh sách
       .card-body
@@ -30,7 +32,6 @@ block main
               href=`${prefixAdmin}/product/create`
               class="btn btn-outline-success"
             ) + Thêm mới
-
         table(
           class= "table.table-hover.table-sm"
           checkbox-multi
