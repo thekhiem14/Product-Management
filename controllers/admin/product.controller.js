@@ -45,8 +45,7 @@ module.exports.product = async (req, res) => {
           sort[req.query.sortKey] = req.query.sortValue;
      }
      else {
-          sort.position = "desc"
-
+          sort.position = "asc"
      }
      //End  Sort
 
