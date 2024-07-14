@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
 
 block main
   //- if(role.permissions.includes("product-category_view"))
@@ -28,8 +29,9 @@ block main
         id="parent_id"
         class="form-control"
       )
-        
-        
+        option(value="") -- Chọn danh mục --
+        if(records)
+          +select-tree(records)
 
     div(class="form-group")
       label(for="desc") Mô tả
