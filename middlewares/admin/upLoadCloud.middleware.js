@@ -21,17 +21,21 @@ module.exports.upload =  (req, res, next) => {
                             reject(error);
                         }
                     }
-                );
+                )
 
                 streamifier.createReadStream(req.file.buffer).pipe(stream);
             });
         };
 
         async function upload(req) {
-            let result = await streamUpload(req);
-            console.log(result);
-            req.body[req.file.fieldname] = result.secure_url
-            next()
+            try {
+                let result = await streamUpload(req)
+                req.body[req.file.fieldname] = result.secure_url
+                next()
+            } catch (err) {
+                console.error('An error occurred:', err);
+                next(err);
+            }
         }
 
         upload(req);
