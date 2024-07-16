@@ -20,4 +20,16 @@ router.post(
     validate.creatPost,
     controller.createPost
 )
+
+router.get("/edit/:id", upload.single('thumbnail'), uploadCloud.upload, controller.edit)
+
+router.patch("/edit/:id",
+    upload.single('thumbnail'),
+    uploadCloud.upload,
+    validate.creatPost,
+    controller.editPost
+)
+
+router.get("/detail/:id", controller.detail)
+
 module.exports = router

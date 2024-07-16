@@ -188,7 +188,6 @@ if(uploadImage) {
 // End Upload Image
 
 // Sort
-
 const sort = document.querySelector("[sort]");
   if(sort) {
     let url = new URL(window.location.href)

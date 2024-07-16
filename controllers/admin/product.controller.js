@@ -164,7 +164,7 @@ module.exports.edit = async (req, res) => {
 }
 // [PATCH] /admin/product/edit/:id
 module.exports.editPatch = async (req, res) => {
-     const id = req.body.id
+     const id = req.params.id
 
      req.body.price = parseInt(req.body.price)
      req.body.discountPercentage = parseInt(req.body.discountPercentage)
@@ -174,14 +174,13 @@ module.exports.editPatch = async (req, res) => {
      if (req.file) {
           req.body.thumbnail = `/uploads/${req.file.filename}`
      }
-
      try {
           await Product.updateOne({ _id: id }, req.body)
           req.flash("success", `Cập nhật thành công`)
      } catch (error) {
           req.flash("error", `Cập nhật thất bại!`)
      }
-
+     
      res.redirect("back")
 }
 // [GET] /admin/product/detail/:id
