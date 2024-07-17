@@ -59,17 +59,6 @@ module.exports.edit = async (req, res) => {
       _id: req.params.id
     }
     const record = await ProductCategory.findOne(find)
-    
-    let parentTitle=''
-    
-    if(record.parent_id){
-      let findParent = {
-        deleted: false,
-        _id: record.parent_id
-      }
-      const parent = await ProductCategory.findOne(findParent)
-      parentTitle= parent.title
-    }
   
     let findRecord = {
       deleted: false
@@ -79,7 +68,6 @@ module.exports.edit = async (req, res) => {
     
     res.render("admin/pages/product-category/edit", {
       record: record,
-      parent: parentTitle,
       records: newRecords
     })
   } catch (error) {

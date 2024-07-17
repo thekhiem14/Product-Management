@@ -137,7 +137,6 @@ module.exports.creat = async (req, res) => {
       
         const newCategory = createTreeHelper.tree(category)
      res.render("admin/pages/product/create", {
-          pageTitle: "Them moi san pham",
           category: newCategory
      })
 }
@@ -162,10 +161,21 @@ module.exports.creatPost = async (req, res) => {
 // [GET] /admin/product/edit/:id
 module.exports.edit = async (req, res) => {
      try {
+          let find = {
+               deleted: false,
+          }
+          
+          const category = await ProductCategory.find(find);
+          
+          const newCategory = createTreeHelper.tree(category)
+
           const id = req.params.id
           const product = await Product.findById(id)
+          
           res.render("admin/pages/product/edit", {
-               product: product
+               pageTitle: "Chỉnh sửa sản phẩm",
+               product: product,
+               category: newCategory
           })
      } catch (error) {
           res.redirect(`${systemConfig.prefixAdmin}/product`)

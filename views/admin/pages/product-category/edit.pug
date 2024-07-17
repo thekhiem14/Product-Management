@@ -24,7 +24,7 @@ block main
           required
         )
       div(class="form-group")
-        label(for="parent_id") Danh mục cha 
+        label(for="parent_id") Danh mục cha
         select(
           name="parent_id"
           id="parent_id"
@@ -32,7 +32,7 @@ block main
         )
           option(value="") -- Chọn danh mục --
           if(records)
-            +select-tree(records)
+            +select-tree(records, 1, record.parent_id)
 
       div(class="form-group")
         label(for="desc") Mô tả
