@@ -21,7 +21,7 @@ if(buttonChangeStatus.length > 0){
 }
 // End Change Status
 
-// Change Deleted
+// Deleted Item
 const buttonDelete = document.querySelectorAll("[button-delete]");
 if(buttonDelete.length > 0) {
     const formDeleteItem = document.querySelector("#form-delete-item")
@@ -30,11 +30,10 @@ if(buttonDelete.length > 0) {
     buttonDelete.forEach(button => {
         button.addEventListener("click", () => {
             const isConfirm = confirm("Bạn có chắc muốn xóa sản phẩm này ?");
-            if(isConfirm) {
+            if(isConfirm) { 
                 const id = button.getAttribute("data-id");
 
                 const action = `${path}/${id}?_method=DELETE`
-                console.log(action);
                 
                 formDeleteItem.action = action;
                 

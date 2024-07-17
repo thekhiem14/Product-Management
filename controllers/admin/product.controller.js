@@ -120,7 +120,7 @@ module.exports.deleteItem = async (req, res) => {
           deletedAt: new Date()
           // Cập nhật ngày xóa
      })
-     req.flash("success", `Xoa thanh cong san pham`)
+     req.flash("success", `Xóa thành công sản phẩm`)
      // Xóa mềm  
 
      res.redirect("back")

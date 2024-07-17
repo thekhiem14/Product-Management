@@ -10,8 +10,6 @@ module.exports.index = async (req, res) => {
     deleted: false,
   };
 
-
-
   const records = await ProductCategory.find(find);
 
   const newRecords = createTreeHelper.tree(records)
@@ -55,34 +53,38 @@ module.exports.createPost = async (req, res) => {
 
 // [GET] /admin/product-category/edit/:id
 module.exports.edit = async (req, res) => {
-  let find = {
-    deleted: false,
-    _id: req.params.id
-  }
-  const record = await ProductCategory.findOne(find)
-  
-  let parentTitle=''
-  
-  if(record.parent_id){
-    let findParent = {
+  try {
+    let find = {
       deleted: false,
-      _id: record.parent_id
+      _id: req.params.id
     }
-    const parent = await ProductCategory.findOne(findParent)
-    parentTitle= parent.title
-  }
-
-  let findRecord = {
-    deleted: false
-  }
-  const records = await ProductCategory.find(findRecord)
-  const newRecords = createTreeHelper.tree(records)
+    const record = await ProductCategory.findOne(find)
+    
+    let parentTitle=''
+    
+    if(record.parent_id){
+      let findParent = {
+        deleted: false,
+        _id: record.parent_id
+      }
+      const parent = await ProductCategory.findOne(findParent)
+      parentTitle= parent.title
+    }
   
-  res.render("admin/pages/product-category/edit", {
-    record: record,
-    parent: parentTitle,
-    records: newRecords
-  })
+    let findRecord = {
+      deleted: false
+    }
+    const records = await ProductCategory.find(findRecord)
+    const newRecords = createTreeHelper.tree(records)
+    
+    res.render("admin/pages/product-category/edit", {
+      record: record,
+      parent: parentTitle,
+      records: newRecords
+    })
+  } catch (error) {
+    res.redirect(`${systemConfig.prefixAdmin}/product-category`)
+  }
 }
 
 // [PATCH] /admin/product-category/edit/:id
@@ -123,5 +125,16 @@ module.exports.detail = async (req, res) => {
     record: record,
     parentId: parentId
   })
+}
+
+// [DELETE] /admin/product-category/delete/:id
+module.exports.delete = async (req, res) => {
+  const id = req.params.id
+
+  await ProductCategory.deleteOne({_id : id})
+
+  req.flash("success", `Xóa thành công sản phẩm`)
+
+  res.redirect("back")
 }
 
