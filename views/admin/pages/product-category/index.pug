@@ -1,8 +1,10 @@
 extends ../../layouts/default.pug
 include ../../mixins/table-tree.pug
+include ../../mixins/alert.pug
 
 block main
   h1 Danh mục sản phẩm
+  +alert-success(5000)
 
   .card.mb-3 
     .card-header Danh sách 
@@ -36,6 +38,12 @@ block main
     method="POST"
     id="form-delete-item"
     data-path=`${prefixAdmin}/product-category/delete`
+  )
+  form( 
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/product-category/change-status`
   )
 
   script(src="/admin/js/product-category.js") 

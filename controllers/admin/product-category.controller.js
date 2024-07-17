@@ -126,3 +126,14 @@ module.exports.delete = async (req, res) => {
   res.redirect("back")
 }
 
+// [PATH] /admin/product-category/change-status/:id/:status
+module.exports.changeStatus = async (req, res) => {
+  const id = req.params.id
+  const status = req.params.status
+
+  await ProductCategory.updateOne({_id: id}, { status: status })
+  req.flash("success", 'Cập nhật trạng thái thành công')
+
+  res.redirect("back")
+}
+

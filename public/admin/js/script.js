@@ -168,7 +168,6 @@ if(showAlert){
     showAlert.classList.add("alert-hidden")
   })
   // Chu dong dong thong bao
-  console.log(showAlert)
 }
 // End Show Alert
 
