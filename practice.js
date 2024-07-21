@@ -53,4 +53,7 @@ if(formChangeMulti){
 }
 // End Change Multi Status
 
+// Bộ lọc
+const filterStatus = document.querySelectorAll('#button-status')
 
+// End Bộ lọc

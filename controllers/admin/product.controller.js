@@ -10,6 +10,7 @@ const createTreeHelper = require("../../helper/createTree")
 // [GET] /admin/product
 module.exports.product = async (req, res) => {
 
+     // Filter Status
      const filterStatus = filterStatusHelper(req.query)
 
      let find = {
@@ -25,6 +26,7 @@ module.exports.product = async (req, res) => {
      if (objectSearch.regex) {
           find.title = objectSearch.regex
      }
+     // End Filter Status
 
      // Pagination
      const countProduct = await Product.countDocuments(find)
@@ -60,6 +62,7 @@ module.exports.product = async (req, res) => {
           filterStatus: filterStatus,
           keyword: objectSearch.keyword,
           pagination: objectPagination,
+          pageTitle: "Trang sản phẩm"
      })
 }
 

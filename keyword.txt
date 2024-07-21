@@ -6,6 +6,8 @@ module.exports: return của file
 
 (index)pug -> route -> controller -> (page)pug -> js(nếu k dùng thẻ form) -> route -> controller -> model 
 (Đã cập nhật dữ liệu lên database thì giao diện tự động cập nhật )
+
+index(pug) -> mixins -> script -> thêm inf vào dường dẫn -> controller -> tree.js -> controller -> model
 *Route có thể có cùng đường dẫn nhưng khác method, cái đầu để tạo trang cái 2 để chỉnh sửa
 
 User database MongooseDB: nguyenthekhiem148/rqhfysj3YBqmc63C

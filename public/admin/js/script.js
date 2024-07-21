@@ -2,7 +2,7 @@
 const buttonStatus = document.querySelectorAll("[button-status]");
 if (buttonStatus.length > 0) {
   let url = new URL(window.location.href);
-  // Bộ lọc
+  // Filter Status
   buttonStatus.forEach(button => {
     button.addEventListener("click", () => {
       const status = button.getAttribute("button-status");
@@ -17,7 +17,7 @@ if (buttonStatus.length > 0) {
     });
   });
 }
-// End bộ lọc
+// End Filter Status
 
 // Form Search
 const formSearch = document.querySelector("#form-search")
