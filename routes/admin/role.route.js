@@ -9,6 +9,7 @@ router.get("/create", controller.create)
 
 router.post("/create", controller.createPost)
 
-// router.get("/permission", controller.permission)
+router.get("/permission", controller.permission)
 
+router.patch("/permission", controller.permissionChange)
 module.exports = router;

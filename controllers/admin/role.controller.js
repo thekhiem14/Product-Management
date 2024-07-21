@@ -30,10 +30,27 @@ module.exports.createPost = async (req,res) => {
 }
 
 // [GET] /admin/role/permission
-// module.exports.permission = async (req,res) => {
-//     let find = {
-//         deleted: false
-//     }
+module.exports.permission = async (req,res) => {
+    let find = {
+        deleted: false
+    }
 
-//     const record = Role.find(find)
-// }
+    const record = await Role.find(find)
+    
+    res.render("admin/pages/role/permission", {
+        pageTitle: " Phân quyền",
+        records: record
+    })
+}
+
+// [PATCH] /admin/role/permission
+module.exports.permissionChange = async (req,res) => {
+    let newPermissions = JSON.parse(req.body.permissions)
+    
+    for(const item of newPermissions){
+        await Role.updateOne({_id: item.id}, {permissions: item.permissions})
+    }
+
+    req.flash("success", "Cập nhật phân quyền thành công")
+    res.redirect("back")
+}
