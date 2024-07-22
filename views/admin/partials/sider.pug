@@ -2,12 +2,14 @@
   .inner-menu
     ul 
       li
-        a(href="/admin/dashboard") Tổng quan 
+        a(href=`${prefixAdmin}/dashboard`) Tổng quan 
       li 
-        a(href="/admin/product-category") Danh mục sản phẩm
+        a(href=`${prefixAdmin}/product-category`) Danh mục sản phẩm
       li 
-        a(href="/admin/product") Danh sách sản phẩm
+        a(href=`${prefixAdmin}/product`) Danh sách sản phẩm
       li 
-        a(href="/admin/role") Nhóm quyền
+        a(href=`${prefixAdmin}/role`) Nhóm quyền
       li 
-        a(href="/admin/role/permission") Phân quyền
+        a(href=`${prefixAdmin}/role/permission`) Phân quyền
+      li 
+        a(href=`${prefixAdmin}/account`) Danh sách tài khoản
