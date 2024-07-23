@@ -1,5 +1,7 @@
 const Product = require("../../models/product.model")
 const ProductCategory = require("../../models/product-category.model")
+const Account = require("../../models/account.model")
+
 const systemConfig = require("../../config/system")
 
 const filterStatusHelper = require("../../helper/filterStatus")
@@ -57,12 +59,24 @@ module.exports.product = async (req, res) => {
           .limit(objectPagination.limitItems)
           .skip(objectPagination.skip)
 
+     for(const item of product){
+          const person = await Account.findOne({
+               _id: item.createdBy.account_id
+          })
+          if(person){
+               item.personCreated = person.fullName
+          }
+          else{
+               item.createdBy.createdAt = ''
+          }
+     }
+     // Lấy ra thông tin người cập nhật gần nhất
      res.render("admin/pages/product/index", {
           product: product,
           filterStatus: filterStatus,
           keyword: objectSearch.keyword,
           pagination: objectPagination,
-          pageTitle: "Trang sản phẩm"
+          pageTitle: "Trang sản phẩm",
      })
 }
 
@@ -154,6 +168,10 @@ module.exports.creatPost = async (req, res) => {
           req.body.position = countProducts + 1;
      } else {
           req.body.position = parseInt(req.body.position);
+     }
+
+     req.body.createdBy = {
+          account_id: res.locals.user.id
      }
 
      const product = new Product(req.body);

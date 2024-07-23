@@ -7,56 +7,62 @@ include ../../mixins/sort.pug
 include ../../mixins/pagination.pug
 
 block main
-  h1 Danh mục sản phẩm
-  +alert-success(5000)
+  if(role.permissions.includes("products-category_view"))
+    h1 Danh mục sản phẩm
+    +alert-success(5000)
 
-  .card.mb-3 
-    .card-header Bộ lọc và Tìm kiếm
-    .card-body
-      .row
-        .col-6
-          +filter-status(filterStatus)
-        .col-6
-          +search(keyword)
-  .card.mb-3
-    .card-header Danh sách 
+    .card.mb-3 
+      .card-header Bộ lọc và Tìm kiếm
       .card-body
-        .row 
-          .col-8 
-          .col-4 
-            a(
-              href=`${prefixAdmin}/product-category/create`
-              class="btn btn-outline-success"
-            ) + Thêm mới
-        table(
-          class= "table.table-hover.table-sm"
-          checkbox-multi
-        )
-          thead
-            tr
-              th  
-                input(type="checkbox" name="checkall")
-              th STT
-              th Hình ảnh
-              th Tiêu đề
-              th Vị trí
-              th Trạng thái
-              th Hành động
+        .row
+          .col-6
+            +filter-status(filterStatus)
+          .col-6
+            +search(keyword)
+    .card.mb-3
+      .card-header Danh sách 
+        .card-body
+          .row 
+            .col-8 
+            .col-4 
+              if(role.permissions.includes("products-category_create"))
+                a(
+                  href=`${prefixAdmin}/product-category/create`
+                  class="btn btn-outline-success"
+                ) + Thêm mới
+          table(
+            class= "table.table-hover.table-sm"
+            checkbox-multi
+          )
+            thead
+              tr
+                th  
+                  input(type="checkbox" name="checkall")
+                th STT
+                th Hình ảnh
+                th Tiêu đề
+                th Vị trí
+                th Trạng thái
+                th Hành động
 
-          tbody
-            +table-tree(records)
-  +pagination(pagination)
-  form( 
-    action=""
-    method="POST"
-    id="form-delete-item"
-    data-path=`${prefixAdmin}/product-category/delete`
-  )
-  form( 
-    action=""
-    method="POST"
-    id="form-change-status"
-    data-path=`${prefixAdmin}/product-category/change-status`
-  )
+            tbody
+              +table-tree(records)
+    +pagination(pagination)
+    if(role.permissions.includes("products-category_delete"))
+      form( 
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path=`${prefixAdmin}/product-category/delete`
+      )
+    if(role.permissions.includes("products-category_edit"))
+      form( 
+        action=""
+        method="POST"
+        id="form-change-status"
+        data-path=`${prefixAdmin}/product-category/change-status`
+      )
 
-  script(src="/admin/js/product-category.js") 
+    script(src="/admin/js/product-category.js") 
+  else 
+    h1 Bạn không có quyền truy cập

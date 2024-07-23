@@ -6,123 +6,132 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 //- gọi file
 block main
-  h1 Trang sản phẩm
-  +alert-success(5000)
+  if(role.permissions.includes("products_view"))
+    h1 Trang sản phẩm
+    +alert-success(5000)
 
-  .card.mb-3
-    .card-header Bộ lọc và Tìm kiếm
-    .card-body
-      .row
-        .col-6
-          +filter-status(filterStatus)
-        .col-6
-          +search(keyword)
-  +sort()
-  .card.mb-3
-    .card-header Danh sách
+    .card.mb-3
+      .card-header Bộ lọc và Tìm kiếm
       .card-body
-        .row 
-          .col-8
-            +form-change-multi(`${prefixAdmin}/product/change-multi?_method=PATCH`)
-          .col-4 
-            a(
-              href=`${prefixAdmin}/product/create`
-              class="btn btn-outline-success"
-            ) + Thêm mới
-        table(
-          class= "table.table-hover.table-sm"
-          checkbox-multi
-        )
-          thead
-            tr
-              th  
-                input(type="checkbox" name="checkall")
-              th STT
-              th Hình ảnh
-              th Tiêu đề
-              th Giá
-              th Vị trí
-              th Trạng thái
-              th Người tạo
-              th Người cập nhật
-              th Hành động
+        .row
+          .col-6
+            +filter-status(filterStatus)
+          .col-6
+            +search(keyword)
+    +sort()
+    .card.mb-3
+      .card-header Danh sách
+        .card-body
+          .row 
+            .col-8
+              +form-change-multi(`${prefixAdmin}/product/change-multi?_method=PATCH`)
+            .col-4 
+              if(role.permissions.includes("products_create"))
+                a(
+                  href=`${prefixAdmin}/product/create`
+                  class="btn btn-outline-success"
+                ) + Thêm mới
+          table(
+            class= "table.table-hover.table-sm"
+            checkbox-multi
+          )
+            thead
+              tr
+                th  
+                  input(type="checkbox" name="checkall")
+                th STT
+                th Hình ảnh
+                th Tiêu đề
+                th Giá
+                th Vị trí
+                th Trạng thái
+                th Người tạo
+                th Hành động
 
-          tbody
-            each item, index in product
-              tr 
-                td 
-                  input(
-                    type="checkbox"
-                    name="id"
-                    value=item.id
-                  )
-                td #{pagination.limitItems*(pagination.currentPage - 1) + (index + 1)}
-                td
-                  img(
-                    src=item.thumbnail
-                    alt=item.title
-                    width="100px"
-                    height="auto"
-                  )
-                td #{item.title}
-                td #{item.price}$
-                td
-                  input(
-                    type="number"
-                    value = item.position 
-                    style = "width: 60px"
-                    min = "1"
-                    name = "position"
-                  )
-                td
-                  if(item.status == "active")
+            tbody
+              each item, index in product
+                tr 
+                  td 
+                    input(
+                      type="checkbox"
+                      name="id"
+                      value=item.id
+                    )
+                  td #{pagination.limitItems*(pagination.currentPage - 1) + (index + 1)}
+                  td
+                    img(
+                      src=item.thumbnail
+                      alt=item.title
+                      width="100px"
+                      height="auto"
+                    )
+                  td #{item.title}
+                  td #{item.price}$
+                  td
+                    input(
+                      type="number"
+                      value = item.position 
+                      style = "width: 60px"
+                      min = "1"
+                      name = "position"
+                    )
+                  td
+                    if(item.status == "active")
+                      a(
+                        href="javascript:;"
+                        data-status=item.status
+                        data-id=item.id
+                        button-change-status
+                        class="badge badge-success"
+                      ) Hoạt động 
+                    else 
+                      a(
+                        href="javascript:;"
+                        data-status=item.status
+                        data-id=item.id
+                        button-change-status
+                        class="badge badge-danger"
+                      ) Dừng hoạt động 
+                  td 
+                    p #{item.personCreated}
+                    if(item.createdBy)
+                      +formatDate(item.createdBy.createdAt)
+                  td 
                     a(
-                      href="javascript:;"
-                      data-status=item.status
-                      data-id=item.id
-                      button-change-status
-                      class="badge badge-success"
-                    ) Hoạt động 
-                  else 
-                    a(
-                      href="javascript:;"
-                      data-status=item.status
-                      data-id=item.id
-                      button-change-status
-                      class="badge badge-danger"
-                    ) Dừng hoạt động 
-
-                td 
-                  a(
-                    href=`${prefixAdmin}/product/detail/${item.id}`
-                    class="btn btn-secondary btn-sm"
-                  ) Chi tiết
-                  a(
-                    href=`${prefixAdmin}/product/edit/${item.id}`
-                    class="btn btn-warning btn-sm"
-                  ) Sửa
-                  button(
-                    class="btn btn-danger btn-sm"
-                    button-delete
-                    data-id=item.id
-                  ) Xóa
-  +pagination(pagination)
-  form(
-    action=""
-    method="POST"
-    id="form-change-status"
-    data-path=`${prefixAdmin}/product/change-status`
-  )
-
-  form(
-    action=""
-    method="POST"
-    id="form-delete-item"
-    data-path=`${prefixAdmin}/product/delete`
-  )
-  script(src="/admin/js/product.js") 
+                      href=`${prefixAdmin}/product/detail/${item.id}`
+                      class="btn btn-secondary btn-sm"
+                    ) Chi tiết
+                    
+                    if(role.permissions.includes("products_edit"))
+                      a(
+                        href=`${prefixAdmin}/product/edit/${item.id}`
+                        class="btn btn-warning btn-sm"
+                      ) Sửa
+                    if(role.permissions.includes("products_delete"))
+                      button(
+                        class="btn btn-danger btn-sm"
+                        button-delete
+                        data-id=item.id
+                      ) Xóa
+    +pagination(pagination)
+    if(role.permissions.includes("products_edit"))
+      form(
+        action=""
+        method="POST"
+        id="form-change-status"
+        data-path=`${prefixAdmin}/product/change-status`
+      )
+    if(role.permissions.includes("products_delete"))
+      form(
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path=`${prefixAdmin}/product/delete`
+      )
+    script(src="/admin/js/product.js") 
                  
 
   
