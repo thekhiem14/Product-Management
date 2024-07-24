@@ -11,7 +11,6 @@ const createTreeHelper = require("../../helper/createTree")
 
 // [GET] /admin/product
 module.exports.product = async (req, res) => {
-
      // Filter Status
      const filterStatus = filterStatusHelper(req.query)
 
@@ -59,6 +58,7 @@ module.exports.product = async (req, res) => {
           .limit(objectPagination.limitItems)
           .skip(objectPagination.skip)
 
+     // Lấy ra thông tin người tạo
      for(const item of product){
           const person = await Account.findOne({
                _id: item.createdBy.account_id
@@ -66,11 +66,19 @@ module.exports.product = async (req, res) => {
           if(person){
                item.personCreated = person.fullName
           }
-          else{
-               item.createdBy.createdAt = ''
+
+          // Lấy ra thông tin người cập nhật gần nhất
+          const updatedBy = item.updatedBy.slice(-1)[0]
+          if(updatedBy) {
+               const userUpdated = await Account.findOne({
+                    _id: updatedBy.account_id
+               })
+               console.log(updatedBy)
+               console.log(userUpdated)
+               updatedBy.accountFullName = userUpdated.fullName
           }
      }
-     // Lấy ra thông tin người cập nhật gần nhất
+
      res.render("admin/pages/product/index", {
           product: product,
           filterStatus: filterStatus,
@@ -84,7 +92,13 @@ module.exports.product = async (req, res) => {
 module.exports.changeStatus = async (req, res) => {
      const status = req.params.status
      const id = req.params.id
-     await Product.updateOne({ _id: id }, { status: status })
+
+     const updatedBy= {
+          account_id: res.locals.user.id,
+          updatedAt: new Date()
+     }
+
+     await Product.updateOne({ _id: id }, { status: status, $push: { updatedBy: updatedBy } })
 
      req.flash("success", "Cap nhat trang thai thanh cong")
      // Cập nhật dữ liệu trong database
@@ -96,13 +110,25 @@ module.exports.changeMulti = async (req, res) => {
      const type = req.body.type
      const ids = req.body.ids.split(", ")
 
+     const updatedBy= {
+          account_id: res.locals.user.id,
+          updatedAt: new Date()
+        }
+
      switch (type) {
           case "active":
-               await Product.updateMany({ _id: { $in: ids } }, { status: "active" })
+               await Product.updateMany({ _id: { $in: ids } }, {
+                    status: "active" ,
+                    $push: { updatedBy: updatedBy}
+
+               })
                req.flash("success", `Cap nhat trang thai thanh cong ${ids.length} san pham`)
                break;
           case "inactive":
-               await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" })
+               await Product.updateMany({ _id: { $in: ids } }, { 
+                    status: "inactive",
+                    $push: {updatedBy: updatedBy}
+               })
                req.flash("success", `Cap nhat trang thai thanh cong ${ids.length} san pham`)
                break;
           case "delete-all":
@@ -114,7 +140,9 @@ module.exports.changeMulti = async (req, res) => {
                     let [id, position] = item.split("-")
                     position = parseInt(position)
 
-                    await Product.updateOne({ _id: id }, { position: position })
+                    await Product.updateOne({ _id: id }, { position: position, 
+                         $push: {updatedBy: updatedBy}
+                    })
                }
 
                req.flash("success", `Doi vi tri thanh cong ${ids.length} san pham`)
@@ -208,7 +236,7 @@ module.exports.edit = async (req, res) => {
 // [PATCH] /admin/product/edit/:id
 module.exports.editPatch = async (req, res) => {
      const id = req.params.id
-
+     
      req.body.price = parseInt(req.body.price)
      req.body.discountPercentage = parseInt(req.body.discountPercentage)
      req.body.stock = parseInt(req.body.stock)
@@ -218,7 +246,15 @@ module.exports.editPatch = async (req, res) => {
           req.body.thumbnail = `/uploads/${req.file.filename}`
      }
      try {
-          await Product.updateOne({ _id: id }, req.body)
+          const updatedBy = {
+               account_id: res.locals.user.id,
+               updatedAt: new Date()
+          } 
+          console.log(updatedBy)
+          await Product.updateOne({_id: id}, {
+               ...req.body,
+               $push: { updatedBy: updatedBy }
+          });
           req.flash("success", `Cập nhật thành công`)
      } catch (error) {
           req.flash("error", `Cập nhật thất bại!`)
