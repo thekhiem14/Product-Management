@@ -18,20 +18,38 @@ module.exports.index = async (req,res) => {
      // gọi file pug
 }
 
-// [GET] /product/:slug
+// [GET] /product/:slugProduct
 module.exports.detail = async (req,res) => {
-     const find = {
-          deleted: false,
-          slug: req.params.slug,
-          status: "active"
-     }
+     try {
+          const find = {
+            deleted: false,
+            slug: req.params.slugProduct,
+            status: "active"
+          }
+          
+          const product = await Product.findOne(find);
+          
+          if(product.product_category_id) {
+            const category = await ProductCategory.findOne({
+              _id: product.product_category_id,
+              status: "active",
+              deleted: false
+            })
+    
+            product.category = category 
+          }
 
-     const product = await Product.findOne(find) 
-     res.render("client/pages/product/detail", {
-          title: "Trang san pham",
-          message: "Trang san pham",
-          product: product
-     })
+          product.priceNew = productsHelper.priceNewProduct(product);
+      
+          res.render("client/pages/product/detail", {
+            pageTitle: product.title,
+            product: product
+        
+          });    
+     } catch (error) {
+          res.redirect(`/product`);
+          
+     }  
 }
 
 // [GET] /product/:slugCategory

@@ -11,7 +11,7 @@ module.exports.priceNewProducts = (products) => {
 
 module.exports.priceNewProduct = (product) => {
   const priceNew = (
-   (item.price * (100 - item.discountPercentage)) /
+   (product.price * (100 - product.discountPercentage)) /
     100
   ).toFixed(0); 
     
