@@ -1,7 +1,7 @@
 const Product = require("../../models/product.model")
 
 const productsHelper = require("../../helper/product")
-// [GET] 
+// [GET] /
 module.exports.index = async (req, res) => {     
 
     // Lấy ra sản phẩm nổi bật
@@ -23,10 +23,10 @@ module.exports.index = async (req, res) => {
     
     const newProductsNew = productsHelper.priceNewProducts(productsNew)
     // Hết lấy ra sản phẩm mới nhât
-
+    console.log(newProductsNew.priceNew)
     res.render("client/pages/home/index", {
         pageTitle: "Trang chủ",
         productsFeatured: newProductsFeatured,
-        productsNew: newProductsNew
+        // productsNew: newProductsNew
     }) 
 }
