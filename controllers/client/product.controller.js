@@ -18,7 +18,7 @@ module.exports.index = async (req,res) => {
      // gọi file pug
 }
 
-// [GET] /product/:slugProduct
+// [GET] /product/detail/:slugProduct
 module.exports.detail = async (req,res) => {
      try {
           const find = {

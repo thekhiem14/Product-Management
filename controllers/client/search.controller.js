@@ -14,7 +14,7 @@ module.exports.index = async (req, res) => {
       deleted: false,
       status: "active",
     })
-    console.log(products)
+    
     newProducts = productsHelper.priceNewProducts(products)
   }
 
