@@ -23,10 +23,9 @@ module.exports.index = async (req, res) => {
     
     const newProductsNew = productsHelper.priceNewProducts(productsNew)
     // Hết lấy ra sản phẩm mới nhât
-    console.log(newProductsNew.priceNew)
     res.render("client/pages/home/index", {
         pageTitle: "Trang chủ",
         productsFeatured: newProductsFeatured,
-        // productsNew: newProductsNew
+        productsNew: newProductsNew
     }) 
 }
