@@ -5,6 +5,7 @@ const productRoutes = require("./product.route")
 const homeRoutes = require("./home.route")
 const searchRoutes = require("./search.route")
 const cartRoutes = require("./cart.route")
+const userRoutes = require("./user.route")
 module.exports = (app) => {
      app.use(categoryMiddleware.category)
      app.use(cartMiddleware.cartId)
@@ -14,5 +15,6 @@ module.exports = (app) => {
      app.use("/product", productRoutes)
      app.use("/search", searchRoutes)
      app.use("/cart", cartRoutes)
+     app.use("/user", userRoutes)
 }
 
