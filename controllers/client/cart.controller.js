@@ -70,3 +70,35 @@ module.exports.add = async (req,res) => {
   req.flash("success", "Đã thêm sản phẩm vào giỏ hàng")
   res.redirect("back")
 }
+
+// [GET] /cart/delete/productId
+module.exports.delete = async (req,res) => {
+  const cartId = req.cookies.cartId
+  const productId = req.params.productId
+
+  const cart = await Cart.findOne({_id: cartId})
+  console.log(cart)
+
+  req.flash("success", "Xóa sản phẩm thành công")
+  res.redirect("back")
+}
+
+// [GET] /cart//update/:productId/:quantity
+module.exports.update = async (req,res) => {
+  const cartId = req.cookies.cartId
+  const productId = req.params.productId
+  const quantity = req.params.quantity
+
+  const cart = await Cart.updateOne({
+    _id: cartId,
+    "products.product_id": productId
+  }, 
+  {
+    $set: {
+    "products.$.quantity": quantity
+  }}
+  )
+
+  req.flash("success", "Cập nhật số lượng sản phẩm thành công")
+  res.redirect("back")
+}
