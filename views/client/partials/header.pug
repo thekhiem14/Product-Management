@@ -40,6 +40,8 @@ header.header
             if(user)
               li
                 a(href='/user/register') Đăng xuất
+              li
+                a(href='/user/info') #{user.fullName}
             else
               li
                 a(href='/user/register') Đăng ký
