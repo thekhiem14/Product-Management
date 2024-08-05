@@ -1,5 +1,6 @@
 const User = require("../../models/user.model")
 const ForgotPassword = require("../../models/forgot-pasword.model")
+const Cart = require("../../models/cart.model")
 const md5 = require("md5")
 
 const sendMailHelper = require("../../helper/sendMail")
@@ -64,18 +65,31 @@ module.exports.loginPost = async (req, res) => {
     return
   }
 
+  if(user.status == "inactive"){
+    req.flash("error", "Tài khoản đang bị khóa")
+    res.redirect("back")
+    return
+  }
+
+  await Cart.updateOne({
+    _id: req.cookies.cartId
+  }, {
+    user_id: user.id
+  })
+
   res.cookie("tokenUser", user.tokenUser)
+
   res.redirect("/")
 }
 
-// [GET] /user/password.forgot
+// [GET] /user/password/forgot
 module.exports.forgotPassword = async (req, res) => {
   res.render("client/pages/user/forgot-password", {
     pageTitle: "Lấy lại mật khẩu"
   })
 }
 
-// [POST] /user/password.forgot
+// [POST] /user/password/forgot
 module.exports.forgotPasswordPost = async (req, res) => {
   const email = req.body.email
   
