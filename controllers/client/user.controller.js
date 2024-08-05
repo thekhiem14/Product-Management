@@ -64,7 +64,7 @@ module.exports.loginPost = async (req, res) => {
     return
   }
 
-  res.cookie("userToken", user.userToken)
+  res.cookie("tokenUser", user.tokenUser)
   res.redirect("/")
 }
 
