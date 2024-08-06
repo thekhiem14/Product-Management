@@ -77,7 +77,6 @@ module.exports.delete = async (req,res) => {
   const productId = req.params.productId
 
   const cart = await Cart.findOne({_id: cartId})
-  console.log(cart)
 
   req.flash("success", "Xóa sản phẩm thành công")
   res.redirect("back")
