@@ -6,6 +6,8 @@ const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const moment = require('moment')
+const http = require('http')
+const { Server } = require('socket.io')
 require("dotenv").config()
 
 const database = require("./config/database")
@@ -21,6 +23,14 @@ database.connect()
 
 const app = express();
 const port = process.env.PORT;
+
+// SoketIO
+const server = http.createServer(app)
+const io = new Server(server)
+io.on('connection', (socket) => {
+     console.log('a user connected', socket.id)
+})
+// End SocketIO
 
 app.use(methodOverride("_method"))
 app.use(bodyParser.urlencoded({extended: false}))
@@ -55,6 +65,6 @@ app.get("*", (req, res) => {
      })
 })
 
-app.listen(port ,() => {
-     console.log(`Da truy cap vao http://localhost:${port}/admin/product`)
+server.listen(port ,() => {
+     console.log(`Da truy cap vao http://localhost:${port}`)
 })
