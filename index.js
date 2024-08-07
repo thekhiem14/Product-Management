@@ -57,11 +57,11 @@ app.use(express.static(`${__dirname}/public`))
 // Route
 routeAdmin(app)
 route(app)
-app.get("*", (req, res) => {
-     res.render("client/pages/error/404", {
-          pageTitle: "404 Not Found"
-     })
-})
+// app.get("*", (req, res) => {
+//      res.render("client/pages/error/404", {
+//           pageTitle: "404 Not Found"
+//      })
+// })
 
 server.listen(port ,() => {
      console.log(`Da truy cap vao http://localhost:${port}`)
