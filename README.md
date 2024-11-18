@@ -1,53 +1,51 @@
 # Product Management
 
-## Công nghệ sử dụng
-* NodeJs
-* Express
-* MongoDB
-* SocketIO
-* Pug
+## Application Overview
+A product management web application built using the **MVC** architecture.  
 
-## Thông tin ứng dụng
+## Technologies Used
+- **Node.js**  
+- **Express**  
+- **MongoDB**  
+- **Socket.IO**  
+- **Pug**  
 
-Ứng dụng quản lý sản phẩm xây dựng theo mô hình MVC
+# Features of the Product Management Web Application  
 
-# Tính năng phát triển cho trang web quản lý sản phẩm
+## Product Management  
+- **Detailed product pages** for clients and admins.  
+- **Search**, filter by status, and pagination.  
+- **Reorder** and update product statuses.  
+- **Create**, edit, delete products (supports batch creation).  
 
-## Quản lý sản phẩm
-- **Trang chi tiết sản phẩm** cho client và admin.
-- **Tìm kiếm**, lọc theo trạng thái, phân trang.
-- **Thay đổi** thứ tự, trạng thái sản phẩm.
-- **Tạo mới**, chỉnh sửa, xóa (hỗ trợ tạo nhiều sản phẩm đồng thời).
+## Category Management  
+- **Manage product categories**.  
+- Integrated **TinyMCE rich-text editor**.  
 
-## Quản lý danh mục
-- **Quản lý danh mục sản phẩm**.
-- Tích hợp **trình soạn thảo văn bản TinyMCE**.
+## User and Role Management  
+- **Login and logout** functionality.  
+- **Role-based user access control**.  
+- Added **middleware** for private route protection.  
+- Integrated **authorization**.  
 
-## Quản lý người dùng và quyền
-- **Đăng nhập, đăng xuất**.
-- **Phân quyền người dùng**.
-- Thêm **middleware** cho các route yêu cầu bảo mật (private routes).
-- Tích hợp **authorization**.
+## User Interface and Experience  
+- Display **notifications**.  
+- **Checkout** and shopping cart pages.  
+- **Chat interface** (in progress).  
 
-## Giao diện và trải nghiệm người dùng
-- Hiển thị **thông báo (notifications)**.
-- **Trang thanh toán**, giỏ hàng.
-- Giao diện **chat** (đang hoàn thiện).
+## Installation  
 
-## Cài đặt
-
-1. Clone repository về máy của bạn:
-
-```bash
-git clone https://github.com/username/repository.git
-```
-2. Cài đặt các phụ thuộc
-```bash
-npm install
-```
-3. Chạy ứng dụng
-```bash
-npm start
-```
-4. Truy cập ứng dụng tại
-[http://localhost:3000/](http://localhost:3000/)
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/thekhiem14/Product-Management.git
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the application:
+   ```bash
+   npm start
+   ```
+4. Access the application at:
+   http://localhost:3000/
