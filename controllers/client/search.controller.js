@@ -10,7 +10,7 @@ module.exports.index = async (req, res) => {
   if (keyword) {
     const regex = new RegExp(keyword, "i")
     const products = await Product.find({
-      title: regex,
+      title: regex,     
       deleted: false,
       status: "active",
     })

@@ -241,16 +241,11 @@ module.exports.editPatch = async (req, res) => {
      req.body.discountPercentage = parseInt(req.body.discountPercentage)
      req.body.stock = parseInt(req.body.stock)
      req.body.position = parseInt(req.body.position)
-
-     if (req.file) {
-          req.body.thumbnail = `/uploads/${req.file.filename}`
-     }
      try {
           const updatedBy = {
                account_id: res.locals.user.id,
                updatedAt: new Date()
           } 
-          console.log(updatedBy)
           await Product.updateOne({_id: id}, {
                ...req.body,
                $push: { updatedBy: updatedBy }
