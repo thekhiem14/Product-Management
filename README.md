@@ -7,7 +7,6 @@ A product management web application built using the **MVC** architecture.
 - **Node.js**  
 - **Express**  
 - **MongoDB**  
-- **Socket.IO**  
 - **Pug**  
 
 # Features of the Product Management Web Application  
@@ -31,7 +30,6 @@ A product management web application built using the **MVC** architecture.
 ## User Interface and Experience  
 - Display **notifications**.  
 - **Checkout** and shopping cart pages.  
-- **Chat interface** (in progress).  
 
 ## Installation  
 
@@ -49,3 +47,8 @@ A product management web application built using the **MVC** architecture.
    ```
 4. Access the application at:
    http://localhost:3000/
+
+## Deployment on Vercel
+
+The application is deployed on Vercel and can be accessed at: https://product-clc.vercel.app/
+
