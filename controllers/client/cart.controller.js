@@ -14,11 +14,9 @@ module.exports.index = async (req,res) => {
     for(const item of cart.products){
       const productId = item.product_id
 
-      const productInfo = await Product.findOne({
+      item.productInfo = await Product.findOne({
         _id: productId
       }).select("title thumbnail slug price discountPercentage")
-
-      item.productInfo = productInfo
       item.productInfo.priceNew = productHelper.priceNewProduct(item.productInfo)
     }
   } 

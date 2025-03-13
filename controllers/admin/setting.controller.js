@@ -12,8 +12,11 @@ module.exports.general = async (req, res) => {
 
 // [PATCH] /settings/general
 module.exports.generalPatch = async (req, res) => {
-  const general = new SettingGeneral(req.body)
-  await general.save()
+  await SettingGeneral.findOneAndReplace(
+    {}, // Điều kiện tìm kiếm (để trống nếu chỉ có một bản ghi)
+    req.body,
+    { new: true, upsert: true } // Trả về dữ liệu mới, tạo mới nếu không có
+  );
   
   res.redirect("back")
 }

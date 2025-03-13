@@ -235,6 +235,7 @@ module.exports.edit = async (req, res) => {
 }
 // [PATCH] /admin/product/edit/:id
 module.exports.editPatch = async (req, res) => {
+     console.log(req.body)
      const id = req.params.id
      
      req.body.price = parseInt(req.body.price)
