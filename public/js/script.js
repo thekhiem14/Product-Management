@@ -15,3 +15,24 @@ if(showAlert){
   // Chu dong dong thong bao
 }
 // End Show Alert
+
+// Bach to top
+document.addEventListener("DOMContentLoaded", function () {
+  var backToTopBtn = document.getElementById("back-to-top");
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add("show");
+    } else {
+      backToTopBtn.classList.remove("show");
+    }
+  });
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+});
+// End Bach to top

@@ -9,14 +9,14 @@ const createTree = (arr, parentId = "") => {
       if (children.length > 0) {
         newItem.children = children;
       }
-      tree.push(newItem);
+        tree.push(newItem);
     }
   });
   return tree;
 }
 
-module.exports.tree = (arr, parentId = "") => {
+module.exports.tree = (arr) => {
   count = 0
   const tree = createTree(arr, parentId = "")
   return tree
-}
+} 

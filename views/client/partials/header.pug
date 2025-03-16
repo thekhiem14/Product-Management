@@ -34,7 +34,7 @@ header.header
             li(class="sub-menu")
               -const pathProduct = "/product";
               a(href=pathProduct) Sản phẩm
-                +sub-menu(layoutProductsCategory, pathProduct)
+              +sub-menu(layoutProductsCategory, pathProduct)
             li
               a(href='/cart') Giỏ hàng (#{miniCart ? miniCart.products.length : 0})
             if(user)
