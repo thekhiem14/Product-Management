@@ -8,4 +8,10 @@ block main
       .col-12 
         +box-head("Kết quả tìm kiếm") 
 
-    +product-grid(products)
+    if(products)
+      .container.my-3
+        .row 
+          .col-12 
+            p Không tìm thấy sản phẩm nào
+    else
+      +product-grid(products)

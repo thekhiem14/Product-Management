@@ -1,33 +1,27 @@
 doctype html
-html
+html(lang="en")
   head
     title #{pageTitle}
-
     link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css")
-
     link(rel="stylesheet", href="/admin/css/style.css")
-
+  
   body
     if(role.permissions.length > 0)
       include ../partials/header.pug
-      //- goi file header
-
+      
       .body
-
         include ../partials/sider.pug
-
-
-        .main
+        
+        .main.container-fluid.mt-4.shadow-sm.bg-light.rounded-lg.p-4
           block main
-
+      
       script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
       script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js")
-
-      //- TinyMCE
+      
+      // TinyMCE integration (if needed)
       script(src="/tinymce/tinymce.min.js")  
       script(src="/admin/js/tinymce-config.js")  
-      //- End TinyMCE
-
+      
       script(src="/admin/js/script.js") 
     else 
-      h1 Bạn không có quyền truy cập 
+      h1.text-danger.text-center.mt-5 Bạn không có quyền truy cập!

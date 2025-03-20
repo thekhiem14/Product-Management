@@ -7,8 +7,9 @@ block main
   +alert-success(5000)
   +alert-error(5000)
 
-  form(
+  form(   
     action=`${prefixAdmin}/my-account/edit?_method=PATCH`
+    id="form-edit-my-account"
     method="POST"
     enctype="multipart/form-data"
   )
@@ -71,4 +72,4 @@ block main
       button(
         type="submit"
         class="btn btn-primary"
-      ) Cập nhật
+      ) Cập nhật 

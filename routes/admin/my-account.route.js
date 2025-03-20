@@ -11,6 +11,6 @@ router.get("/", controller.index)
 
 router.get("/edit", controller.edit)
 
-router.patch("/edit", uploadCloud.upload, upload.single('avatar'), controller.editPatch,)
+router.patch("/edit", upload.single('avatar'), uploadCloud.upload, controller.editPatch,)
 
 module.exports = router;

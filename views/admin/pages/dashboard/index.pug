@@ -1,9 +1,43 @@
 extends ../../layouts/default.pug
 
 block main
-  h1 Trang tong quan
-  
-  div #{user}
-  div ----------------
-  div #{role.title}
-  div #{role.permissions}
+  h1 Trang tổng quan
+  .card.mb-4
+    .card-header.bg-primary.text-white
+      h3 Thông tin người dùng
+    .card-body
+      p
+        strong ID: 
+        | #{user._id}
+      p
+        strong Họ tên: 
+        | #{user.fullName}
+      p
+        strong Email: 
+        | #{user.email}
+      p
+        strong Số điện thoại: 
+        | #{user.phone}
+      p
+        strong Token: 
+        | #{user.token}
+      p
+        strong Trạng thái: 
+        | #{user.status}
+      p
+        strong Ngày tạo: 
+        | #{user.createdAt}
+      p
+        strong Ngày cập nhật: 
+        | #{user.updatedAt}
+
+  .card.mb-4
+    .card-header.bg-success.text-white
+      h3 Thông tin quyền hạn
+    .card-body
+      p
+        strong Vai trò: 
+        | #{role.title}
+      ul
+        each permission in role.permissions
+          li= permission

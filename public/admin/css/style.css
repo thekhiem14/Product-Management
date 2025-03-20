@@ -1,75 +1,122 @@
+/* ================= HEADER ================= */
 .header {
-     background: #202020;
-     padding: 10px 0;
-     position: sticky;
-     top: 0;
-       z-index: 999;
-   }
-   
-   .header .inner-logo a {
-     font-size: 24px;
-     font-weight: 700;
-     color: #fff;
-   }
-   /* End Header */
-   
-   /* Body */
-   .body .sider {
-     width: 150px;
-     background: #323232;
-     color: #fff;
-     height: calc(100vh - 56px);
-     position: fixed;
-     top: 56px;
-     left: 0;
-   }
-   
-   .body .main {
-     margin: 15px;
-     position: relative;
-     left: 150px;
-     width: calc(100% - 180px);
-   }
-   /* End Body */
-   /* Sider */
-  .sider .inner-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sider .inner-menu ul li a {
-    color: #fff;
-    display: block;
-    padding: 6px 10px;
-    border-bottom: 1px solid #515151;
-  }
-  /* Show Alert */
+  background: #202020;
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header .inner-logo a {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header .inner-logo a:hover {
+  color: #f39c12;
+}
+
+/* ================= SIDEBAR ================= */
+.body {
+  display: flex;
+}
+
+.body .sider {
+  width: 200px;
+  background: #272727;
+  color: #fff;
+  height: 100vh;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  padding-top: 10px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: width 0.3s ease-in-out;
+}
+
+.sider:hover {
+  width: 220px;
+}
+
+/* Sidebar Menu */
+.sider .inner-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sider .inner-menu ul li {
+  transition: background 0.3s ease;
+}
+
+.sider .inner-menu ul li:hover {
+  background: #3a3a3a;
+}
+
+.sider .inner-menu ul li a {
+  color: #fff;
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.sider .inner-menu ul li a:hover {
+  color: #f39c12;
+}
+
+/* ================= MAIN CONTENT ================= */
+.body .main {
+  margin: 20px;
+  position: relative;
+  left: 200px;
+  width: calc(100% - 220px);
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ================= ALERTS ================= */
 [show-alert] {
   position: fixed;
   top: 70px;
   right: 15px;
   z-index: 9999;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
 }
 
 [show-alert].alert-hidden {
-  animation-name: alert-hidden;
-  animation-duration: 0.5s;
-  animation-fill-mode: both;
+  animation: alert-hidden 0.5s forwards;
 }
 
 @keyframes alert-hidden {
   from {
-    right: 15px;
+      right: 15px;
   }
   to {
-    right: -100%;
-    display: none;
+      right: -100%;
+      display: none;
   }
 }
 
 [show-alert] [close-alert] {
-  background: #ffffffc4;
+  background: #fff;
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -78,10 +125,14 @@
   font-weight: 600;
   border-radius: 50%;
   cursor: pointer;
+  transition: background 0.3s;
 }
-/* End Show Alert */
 
-/* Image Preview */
+[show-alert] [close-alert]:hover {
+  background: #f39c12;
+}
+
+/* ================= IMAGE PREVIEW ================= */
 .image-preview {
   width: 150px;
   height: auto;
@@ -89,9 +140,40 @@
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 5px;
+  background: #fff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.image-preview:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .image-preview[src=""] {
   display: none;
 }
-/* End Image Preview */
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .body {
+      flex-direction: column;
+  }
+
+  .body .sider {
+      width: 100%;
+      height: auto;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+  }
+
+  .sider .inner-menu ul {
+      display: flex;
+      gap: 10px;
+  }
+
+  .body .main {
+      left: 0;
+      width: 100%;
+  }
+}
