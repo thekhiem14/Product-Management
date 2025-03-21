@@ -52,3 +52,6 @@ A product management web application built using the **MVC** architecture.
 
 The application is deployed on Vercel and can be accessed at: https://product-clc.vercel.app/
 
+### Admin account: 
+- Username: admin@email.com
+- Password: admin
