@@ -10,10 +10,12 @@ const accountRoutes = require("./account.route")
 const authRoutes = require("./auth.route")
 const myAccountRoutes = require("./my-account.route")
 const settingRoutes = require("./setting.route")
+const adminRoutes = require("./admin.route")
 
 module.exports = (app) => {
      const PATH_ADMIN = systemConfig.prefixAdmin
 
+     app.use(PATH_ADMIN, adminRoutes)
      app.use(PATH_ADMIN + "/dashboard", authMiddleware.requireAuth, dashboardRoutes)
      app.use(PATH_ADMIN + "/product", authMiddleware.requireAuth, productRoutes)
      app.use(PATH_ADMIN + "/product-category", authMiddleware.requireAuth, productCategoryRoutes)
